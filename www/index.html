@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tutoring</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+		<script src="/dashboard.js"></script>
+		<link rel="stylesheet" href="/jquery-ui.css" />
+		<style>
+			.wrapper { width: 1000px; margin: 10px auto; }
+			div { padding: 10px; }
+			li,ul { list-style-type: none; margin: 0px; padding: 0px;  }
+			li { padding: 5px; }
+			.clear { clear: both; }
+			ul.buttons > li { float: left; width: 20% }
+		</style>
+		<script type="text/javascript">
+			$( document ).ready( function()
+			{
+				"use strict";
+
+				$( "#register-div" ).dialog({
+					autoOpen: false,
+					height: 400,
+					width: 450,
+					modal: true,
+					buttons: { 
+						"Register": function()
+						{
+							register();	
+						},
+						Cancel: function() { $( this ).dialog( "close" ); }
+					}
+				});
+
+				
+				var err = function( jqXHR, textStatus, error )
+				{
+					var json = $.parseJSON( jqXHR.responseText );
+					if ( typeof json !== "undefined" && typeof json.reason !== "undefined" )
+						alert( json.reason );
+					else
+						alert( error );
+				};
+
+				$( "#login" ).submit( function()
+				{
+					$.ajax({
+						type: "POST",
+						dataType: "JSON",
+						url: "/login/",
+						data: $( this ).serialize(),
+						success: function() { window.location = "/dashboard/"; },
+						error: err
+					});
+
+					return false;
+				});
+				
+				$( "#register" ).submit( function()
+				{
+					return register;
+				});
+
+				var register = function()
+				{
+					$.ajax({
+						type: "POST",
+						dataType: "JSON",
+						url: "/register/",
+						data: $( "#register" ).serialize(),
+						success: function() { alert( "Registered." ); $( "#register-div" ).dialog( "close" ) },
+						error: err
+					});
+
+					return false;
+				};
+
+				$( "#register-button" ).click( function() { $( "#register-div" ).dialog( "open" ); return false; } );
+			});
+		</script>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div id="login-div" class="ui-widget ui-widget-content">
+				<form id="login" method="POST" action="https://tutoring.joshuathornton.com.au/login/">
+					<ul>
+						<li class="ui-widget-header">
+							<ul>
+								<li>Login</li>
+							</ul>
+						</li>
+						<li>
+							<ul>
+								<li><label for="user">Username:</label></li>
+								<li><input id="user" name="user" type="text" /></li>
+							</ul>
+						</li>
+						<li>
+							<ul>
+								<li><label for="pass">Password:</label></li>
+								<li><input id="pass" name="pass" type="password" /></li>
+							</ul>
+						</li>
+						<li>
+							<ul class="buttons">
+								<li><input type="submit" id="submit" value="Login" /></li>
+								<li><input type="button" id="register-button" value="Register" /></li>
+								<div class="clear"></div>
+							</ul>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<div id="register-div">
+				<form id="register" method="POST" action="https://tutoring.joshuathornton.com.au/register/">
+					<ul>
+						<li>
+							<ul>
+								<li><label for="user">Username:</label></li>
+								<li><input id="user" name="user" type="text" /></li>
+							</ul>
+						</li>
+						<li>
+							<ul>
+								<li><label for="pass">Password:</label></li>
+								<li><input id="pass" name="pass" type="password" /></li>
+							</ul>
+						</li>
+						<li>
+							<ul>
+								<li><label for="first">First Name:</label></li>
+								<li><input id="first" name="first" type="text" /></li>
+							</ul>
+						</li>
+						<li>
+							<ul>
+								<li><label for="last">Last Name:</label></li>
+								<li><input id="last" name="last" type="text" /></li>
+							</ul>
+						</li>
+						<li>
+							<ul>
+								<li><label for="email">Email Address:</label></li>
+								<li><input id="email" name="email" type="text" /></li>
+							</ul>
+						</li>
+					</ul>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

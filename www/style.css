@@ -1,0 +1,20 @@
+html,body { padding: 0px; margin: 0px; }
+.wrapper { width: 1002px; margin: 10px auto; padding: 0px 10px; }
+.header { font-weight: bold; text-align: center; }
+.clear { clear: both; }
+.new { padding-top: 10px; border-top: 1px solid #aaaaaa; background-color: white; }
+.buttons { margin-top: 10px; text-align: center; display: block; }
+
+ul, li { list-style-type: none; padding: 0px; margin: 0px; position: relative; }
+li { text-align: center; }
+div > ul > li:nth-child(odd) { background-color: #eeeeee; }
+div > ul > li { display: table; width: 100%; }
+div > ul > li > ul { display: table-row; width: 100%; }
+div > ul > li > ul > li { display: table-cell; float: none; vertical-align: middle; padding: 2px; width: 25%; }
+.students, .buttons { display: block; margin: 10px 0px; }
+.students > li { display: table; width: 100%; }
+.students > li:nth-child(odd) { background-color: #eeeeee; }
+.students > li > ul { display: table-row; }
+.students > li > ul > li { display: table-cell; width: 20%; text-transform: capitalize;}
+.courses { text-transform: uppercase; }
+
